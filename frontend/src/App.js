@@ -1,9 +1,9 @@
 import Navbar from './components/Navbar';
-import Contacts from './components/Contacts';
+// import Contacts from './components/Contacts';
 import AddChat from './components/AddChat';
 import Chat from './components/Chat';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 
 function App() {
   const [contact, setContact] = useState("");

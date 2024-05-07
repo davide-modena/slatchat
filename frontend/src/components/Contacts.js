@@ -5,7 +5,7 @@ const Contacts = () => {
         <div class="contacts mobile-container">
             <div className="contact">
                 <div className="contact-info">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Johnny_Depp_2020.jpg"/>
+                    <img alt="" src="https://upload.wikimedia.org/wikipedia/commons/2/21/Johnny_Depp_2020.jpg"/>
                     <div className="text">
                         <h3>Johnny Depp</h3>
                         <p>Ciao bro, come va?</p>  
@@ -18,7 +18,7 @@ const Contacts = () => {
             </div>
             <div className="contact">
                 <div className="contact-info">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Johnny_Depp_2020.jpg"/>
+                    <img alt="" src="https://upload.wikimedia.org/wikipedia/commons/2/21/Johnny_Depp_2020.jpg"/>
                     <div className="text">
                         <h3>Johnny Depp</h3>
                         <p>Ciao bro, come va?</p>  

@@ -116,7 +116,7 @@ const Chat = ({contact}) => {
             <div className="header">
                 <div className="header-content">
                     <FontAwesomeIcon icon={faChevronLeft} className="icon" onClick={()=>{window.location.href=""}}/>
-                    <img src={imageSrc}/>
+                    <img alt="" src={imageSrc}/>
                     <div className="text">
                         <h3>{contact.name}</h3>
                         <p id="contact-state">online</p>
@@ -129,7 +129,7 @@ const Chat = ({contact}) => {
                         <div className={`chat-message ${message.sender}`}>
                         <span className="text">
                             {message.message}
-                            <span className="details">{formatTime(message.timestamp)} <img src={spunta}/></span>
+                            <span className="details">{formatTime(message.timestamp)} <img alt="" src={spunta}/></span>
                         </span>
                     </div>
                     ))}
