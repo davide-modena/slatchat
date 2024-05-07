@@ -1,0 +1,41 @@
+.contacts{
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    top: 95px;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-info{
+    display: flex;
+    gap: 10px;
+}
+
+img{
+    height: 55px;
+    width: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+p{
+    font-size: 15px;
+}
+
+.new-message{
+    width: 20px;
+    height: 20px;
+    background-color: var(--active);
+    border-radius: 50%;
+    float: right;
+    color: white;
+}

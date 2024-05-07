@@ -1,0 +1,17 @@
+.navbar{
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar .navbar-content{
+    width: 100vw;
+    max-width: 600px;
+    color: white;
+    padding: 10px;
+}

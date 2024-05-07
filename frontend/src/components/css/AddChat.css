@@ -1,0 +1,31 @@
+.add-chat{
+    width: 100vw;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.add-chat h1{
+    font-size: 28px;
+}
+
+.add-chat input, textarea{
+    background: none;
+    border: 1px solid rgba(255,255,255,.2);
+    padding: 10px;
+    border-radius: 20px;
+    color: white;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.add-chat button{
+    width: 100%;
+    padding: 15px;
+    color: white;
+    background-color: var(--primary);
+    font-size: 20px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+}
