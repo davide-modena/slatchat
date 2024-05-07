@@ -7,6 +7,8 @@ import spunta from './../spunta.svg';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
+const cheerio = require('cheerio');
+
 const Chat = ({contact}) => {
     const [searchInput, setSearchInput] = useState("");
     const [messages, setMessages] = useState([]);
@@ -14,7 +16,7 @@ const Chat = ({contact}) => {
     const contentRef = useRef(null);
 
     useEffect(() => {
-        const getGoogleImage = async () => {
+        const getGoogleImageOld = async () => {
             try {
                 // ogni 3 mesi bisogna fare il login su https://davidemodena.eu.pythonanywhere.com per far funzionare l'api v2/googleImages. Prossima Scadenza: 07/08/2024
                 const jsonFile = await axios.get(`https://dreamchatbackend.netlify.app/.netlify/functions/server/api/v2/googleImages?q=${contact.name}`);
@@ -27,9 +29,19 @@ const Chat = ({contact}) => {
                 console.error("Errore durante il recupero delle immagini:", error);
             }
         };
+
+        const getGoogleImage = () => {
+            getImageLinks(contact.name)
+                .then(imageLinks => {
+                    setImageSrc(imageLinks[0])
+                })
+                .catch(error => {
+                    console.error("Errore durante il recupero dei link delle immagini:", error);
+                });
+        }
     
         if (contact && contact.name) {
-            getGoogleImage();
+            getGoogleImageOld();
         }
     },[contact])
 
@@ -68,9 +80,9 @@ const Chat = ({contact}) => {
 
             try{
                 // Effettuare altre operazioni come necessario
-                // const messageJSON = await axios.get(`https://dreamchatbackend.netlify.app/.netlify/functions/server/api/v1/generateMessageLong?name=${contact.name}&details=${''}&message=${searchInput}`);
+                const messageJSON = await axios.get(`https://dreamchatbackend.netlify.app/.netlify/functions/server/api/v1/generateMessageLong?name=${contact.name}&details=${''}&message=${searchInput}`);
 
-                const messageJSON = await axios.get(`https://dreamchatbackend.netlify.app/.netlify/functions/server/api/v2/generateMessageLong?name=${contact.name}&pastMessages=${messagesToString(messages)}&message=${searchInput}`);
+                // const messageJSON = await axios.get(`https://dreamchatbackend.netlify.app/.netlify/functions/server/api/v2/generateMessageLong?name=${contact.name}&pastMessages=${messagesToString(messages)}&message=${searchInput}`);
                 const receivedMessage = messageJSON.data.message.replace("\"","");
             
                 // Aggiungere il messaggio ricevuto alla fine dell'array dei messaggi
@@ -109,6 +121,29 @@ const Chat = ({contact}) => {
         const hours = new Date(timestamp).getHours().toString().padStart(2, '0');
         const minutes = new Date(timestamp).getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
+    }
+
+    function getImageLinks(searchQuery) {
+        if (!searchQuery) {
+            searchQuery = "user icon";
+        }
+        const url = `https://www.google.com/search?udm=2&q=${searchQuery}`;
+        return axios.get(url)
+            .then(response => {
+                const $ = cheerio.load(response.data);
+                const imageLinks = [];
+                $('img').each((index, element) => {
+                    const src = $(element).attr('src');
+                    if (src && src.startsWith('https://')) {
+                        imageLinks.push(src);
+                    }
+                });
+                return imageLinks;
+            })
+            .catch(error => {
+                console.error("Errore durante la richiesta HTTP:", error);
+                return [];
+            });
     }
 
     return (

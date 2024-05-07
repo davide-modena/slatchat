@@ -187,4 +187,38 @@ router.get('/api/v2/googleImages', (req, res) => {
         });
 });
 
+router.get('/api/v2/getImage', (req, res) => {
+    const searchQuery = req.query.q;
+    function getImageLinks(searchQuery) {
+        if (!searchQuery) {
+            searchQuery = "user icon";
+        }
+        const url = `https://www.google.com/search?udm=2&q=${searchQuery}`;
+        return axios.get(url)
+            .then(response => {
+                const $ = cheerio.load(response.data);
+                const imageLinks = [];
+                $('img').each((index, element) => {
+                    const src = $(element).attr('src');
+                    if (src && src.startsWith('https://')) {
+                        imageLinks.push(src);
+                    }
+                });
+                return imageLinks;
+            })
+            .catch(error => {
+                console.error("Errore durante la richiesta HTTP:", error);
+                return [];
+            });
+    }
+    getImageLinks(searchQuery)
+        .then(imageLinks => {
+            res.json(imageLinks[0]);
+        })
+        .catch(error => {
+            console.error("Errore durante il recupero dei link delle immagini:", error);
+            res.status(500).json({ error: "Errore interno del server" });
+        });
+});
+
 module.exports = { router };
